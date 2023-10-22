@@ -71,20 +71,22 @@ const MapComponent: React.FC<Props> = ({ units, orders, onTerritoryClicked }) =>
 
   useEffect(() => {
     if (mapRef.current) {
-      mapRef.current.addEventListener('load', () => {
-        setIsLoaded(true);
-        const mapContentDocument = mapRef.current?.contentDocument;
-        setSvgMap(mapContentDocument);
-        const popupElement = mapContentDocument?.getElementById('tooltip');
-        setPopup(popupElement);
-        initializeUnitsOnMap();
-        initializeOrdersOnMap();
-        if (mapContentDocument) {
-          applyHoverFunctionToTerritories(mapContentDocument);
-        }
-      });
+      setIsLoaded(true);
+      const mapContentDocument = mapRef.current?.contentDocument;
+      setSvgMap(mapContentDocument);
+      const popupElement = mapContentDocument?.getElementById('tooltip');
+      setPopup(popupElement);
+      if (mapContentDocument) {
+        applyHoverFunctionToTerritories(mapContentDocument);
+      }
     }
   }, [mapRef]);
+
+  useEffect(() => {
+    if(!svgMap) return;
+    initializeUnitsOnMap();
+    initializeOrdersOnMap();
+  }, [svgMap])
 
   useEffect(() => {
     if (isLoaded) {

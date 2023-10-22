@@ -27,7 +27,7 @@ import { ReactNode } from 'react';
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [territories, setTerritories] = useState<TerritoryInterface[]>(territoryList);
   const [units, setUnits] = useState<UnitInterface[]>(InitialUnits);
-  const [orders, setOrders] = useState<Order[]>([new Order(units[0], OrderType.Hold)]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   const submitOrders = (orders: Order[]) => {
     setOrders(orders);

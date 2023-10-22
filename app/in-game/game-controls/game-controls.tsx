@@ -33,6 +33,18 @@ const GameControls = () => {
     throw new Error('Function not implemented.');
   }
 
+  function getUnitByTerritoryId(territoryId: string) {
+    return units.find(u => u.territoryId === territoryId);
+  }
+
+  function toggleOrderMenuOpenClose() {
+    throw new Error('Function not implemented.');
+  }
+  
+  function updateOrderMenuColors() {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-blue-500 p-4 text-white">
@@ -81,15 +93,3 @@ const GameControls = () => {
 };
 
 export default GameControls;
-function getUnitByTerritoryId(territoryId: string) {
-  throw new Error('Function not implemented.');
-}
-
-function toggleOrderMenuOpenClose() {
-  throw new Error('Function not implemented.');
-}
-
-function updateOrderMenuColors() {
-  throw new Error('Function not implemented.');
-}
-
