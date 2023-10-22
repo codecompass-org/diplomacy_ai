@@ -1,3 +1,27 @@
+# diplomacy
+a diplomacy game server as well as potential clients including mobile/web/etc.
+
+# TODO
+
+- [x] Army Asset
+- [x] Fleet Asset
+- [ ] Move lines on map
+- [ ] convoy lines on map
+- [ ] support lines on map
+- [x] Add labels to map
+- [ ] add coasts to map
+- [ ] combine territories with multiple svg paths (Denmark)
+- [ ] fix firebase storage path to include game ID and user ID
+- [ ] fix order entry to continuously update orders instead of making new ones
+- [ ] add chat feature
+- [ ] add game queue page
+- [ ] update adjudicator to read from firebase
+- [ ] update adjudicator to update orders/game in firebase
+- [ ] game model: turn length, next adjudication time, players, current year, ...
+- [ ] add firebase function to kick off adjudicator
+- [ ] add missing sea above Denmark
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
