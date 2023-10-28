@@ -48,7 +48,7 @@ const GameControls = () => {
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-blue-500 p-4 text-white">
-        <h1>Game Controls</h1>
+        <h1>WORK IN PROGRESS</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4">
