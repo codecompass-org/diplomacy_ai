@@ -40,7 +40,7 @@ const GameControls = () => {
   function toggleOrderMenuOpenClose() {
     throw new Error('Function not implemented.');
   }
-  
+
   function updateOrderMenuColors() {
     throw new Error('Function not implemented.');
   }
@@ -48,33 +48,32 @@ const GameControls = () => {
   return (
     <div className="flex flex-col h-screen">
       <header className="bg-blue-500 p-4 text-white">
-        <h1>Tab Two</h1>
+        <h1>Game Controls</h1>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4">
-        <div className="absolute top-4 left-4">
-          <button className="bg-blue-500 text-white p-2 rounded-full">
-            <i className="material-icons">arrow_dropright</i>
-          </button>
-          <div className="flex flex-col mt-2">
-            {/* You can add more utility classes to style these as needed */}
-            <button className="mb-2" onClick={(e) => onActionClick(OrderType.Hold, e)}>
+        {/* This assumes you have a React version of your <app-map> component */}
+        <MapComponent units={units} orders={orders} onTerritoryClicked={onTerritoryClick} />
+
+        <div className="flex items-center justify-center">
+          <div className="flex flex-col items-center">
+
+            <button className="mb-2 focus:outline-none" onClick={(e) => onActionClick(OrderType.Hold, e)}>
               <i className="material-icons">pause</i>
             </button>
-            <button className="mb-2" onClick={(e) => onActionClick(OrderType.Move, e)}>
+            <button className="mb-2 focus:outline-none" onClick={(e) => onActionClick(OrderType.Move, e)}>
               <i className="material-icons">play_arrow</i>
             </button>
-            <button className="mb-2" onClick={(e) => onActionClick(OrderType.Support, e)}>
+            <button className="mb-2 focus:outline-none" onClick={(e) => onActionClick(OrderType.Support, e)}>
               <i className="material-icons">fastforward</i>
             </button>
-            <button onClick={(e) => onActionClick(OrderType.Convoy, e)}>
+            <button className="focus:outline-none" onClick={(e) => onActionClick(OrderType.Convoy, e)}>
               <i className="material-icons">share</i>
             </button>
           </div>
         </div>
 
-        {/* This assumes you have a React version of your <app-map> component */}
-        <MapComponent units={units} orders={orders} onTerritoryClicked={onTerritoryClick} />
+
 
         <ul className="mt-4">
           {orders.map(order => (

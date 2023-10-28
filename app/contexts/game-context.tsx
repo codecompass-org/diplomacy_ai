@@ -1,11 +1,11 @@
 "use client"
 
-import { createContext, useContext, useState } from 'react';
-import { TerritoryInterface, UnitInterface, OrderType } from '../models/types';
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { TerritoryInterface, UnitInterface } from '../models/types';
 import { Order } from '../models/order';
+import { getGame } from '../data/api/get-game';
 
 import territoryListRaw from '../data/static/territories.json';
-import { InitialUnits } from '../data/static/initial-units';
 const territoryList: TerritoryInterface[] = territoryListRaw as TerritoryInterface[];
 
 interface GameInterface {
@@ -22,12 +22,16 @@ export const useGame = () => {
   return useContext(GameContext);
 };
 
-import { ReactNode } from 'react';
-
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [territories, setTerritories] = useState<TerritoryInterface[]>(territoryList);
-  const [units, setUnits] = useState<UnitInterface[]>(InitialUnits);
+  const [units, setUnits] = useState<UnitInterface[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
+
+  useEffect(() => {
+    getGame(1).then((game) => {
+      setUnits(game.current_units || []);
+    });
+  }, [])
 
   const submitOrders = (orders: Order[]) => {
     setOrders(orders);
@@ -39,7 +43,7 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     orders,
     submitOrders
   };
-
+  console.log(value)
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 
 };
