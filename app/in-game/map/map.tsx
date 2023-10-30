@@ -15,7 +15,6 @@ const MapComponent: React.FC<Props> = ({ units, orders, onTerritoryClicked }) =>
   const mapRef = useRef<HTMLObjectElement>(null);
   const [svgMap, setSvgMap] = useState<SvgHelper | null>(null);
   const [selectedTerritory, setSelectedTerritory] = useState<SVGPathElement | null>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const initializeMapData = () => {
     if (!svgMap) return;
@@ -48,19 +47,31 @@ const MapComponent: React.FC<Props> = ({ units, orders, onTerritoryClicked }) =>
     onTerritoryClicked(target.getAttribute('data-name') || '');
   };
 
-  useEffect(() => {
-    if (!mapRef.current) return;
-    
-    setIsLoaded(true);
-    const mapContentDocument = mapRef.current.contentDocument;
+  const listenForSVGLoad = () => {
+    const handleObjectLoad = () => {
+      if (!mapRef.current) return;
+      const mapContentDocument = mapRef.current.contentDocument;
+      setSvgMap(new SvgHelper(mapContentDocument as unknown as SVGAElement));
+    };
 
-    if (!mapContentDocument) return;
+    // Check if the object reference exists and the SVG is fully loaded.
+    if (mapRef.current && mapRef.current.contentDocument) {
+      // If the SVG is already loaded (for some browsers)
+      handleObjectLoad();
+    } else if (mapRef.current) {
+      // If the SVG hasn't been loaded yet, attach a listener
+      mapRef.current.addEventListener('load', handleObjectLoad);
 
-    setSvgMap(new SvgHelper(mapContentDocument as unknown as SVGAElement));
-  }, [mapRef]);
+      // Cleanup the event listener on component unmount
+      return () => {
+        mapRef.current?.removeEventListener('load', handleObjectLoad);
+      };
+    }
+  };
 
-  useEffect(initializeMapData, [isLoaded, units, orders]);
-  useEffect(setupTerritoryInteractions, [isLoaded]);
+  useEffect(listenForSVGLoad, [mapRef]);
+  useEffect(initializeMapData, [svgMap, units, orders]);
+  useEffect(setupTerritoryInteractions, [svgMap]);
 
   return (
     <object id="svg" type="image/svg+xml" data="assets/map_2.svg" ref={mapRef}>
